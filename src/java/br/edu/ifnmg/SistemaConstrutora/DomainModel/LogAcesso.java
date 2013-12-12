@@ -99,6 +99,7 @@ public class LogAcesso implements Serializable {
         return true;
     }
 
+    
     @Override
     public String toString() {
         return "br.edu.ifnmg.SistemaConstrutora.domainModel.LogAcesso[ id=" + id + " ]";
