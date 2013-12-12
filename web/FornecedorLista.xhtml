@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="./ModeloTela.xhtml">
+
+            <ui:define name="content">
+                <p:panelGrid columns="2">  
+                    <f:facet name="header">  
+                        Filtros  
+                    </f:facet>  
+
+                    <h:outputLabel value="Razao Social:" />
+                    <p:inputText value="${fornecedorController.filtro.razaoSocial}" />  
+
+                    <h:outputLabel value="Cnpj:" />
+                    <p:inputText value="${fornecedorController.filtro.cnpj}" />                     
+                    
+                    <f:facet name="footer">  
+                        <p:commandButton ajax="false" value="Filtrar" icon="ui-icon-check" action="${fornecedorController.filtrar()}" style="margin:0"/>  
+                        <p:commandButton ajax="false" value="Novo Fornecedor" action="${fornecedorController.criar()}" />
+                    </f:facet>  
+                </p:panelGrid>
+                <p:dataTable value="${fornecedorController.listagem}" var="item" emptyMessage="Registros nÃo Encontrados!">
+                    <p:column sortBy="razaoSocial" headerText="Razao Social">
+                        ${item.razaoSocial}
+                    </p:column>
+                    <p:column sortBy="endereco" headerText="Endereco ">
+                        ${item.endereco}
+                    </p:column>
+                    <p:column sortBy="email" headerText="Email">
+                        ${item.email}
+                    </p:column>
+                    <p:column sortBy="cidade" headerText="Cidade">
+                        ${item.cidade}
+                    </p:column>
+
+                    <p:column sortBy="cnpj" headerText="Cnpj">
+                        ${item.cnpj}
+                    </p:column>
+
+                    <p:column sortBy="Telefone" headerText="Telefone">
+                        ${item.telefone}
+                    </p:column>
+                    
+                     <p:column headerText="Editar">
+                         <p:commandButton value="Editar" ajax="false" action="${fornecedorController.editar()}">
+                             <f:setPropertyActionListener target="${fornecedorController.entidade}" value="${item}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

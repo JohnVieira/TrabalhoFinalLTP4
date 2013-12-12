@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="./ModeloTela.xhtml">
+
+            <ui:define name="content">
+                <p:panelGrid columns="2">  
+                    <f:facet name="header">  
+                        Filtros  
+                    </f:facet>  
+
+                    <h:outputLabel value="Numero:" />
+                    <p:inputText value="${predioController.filtro.numero}" />  
+
+                    <h:outputLabel value="Nome:" />
+                    <p:inputText value="${predioController.filtro.nome}" />                     
+                    
+                    <f:facet name="footer">  
+                        <p:commandButton ajax="false" value="Filtrar" icon="ui-icon-check" action="${predioController.filtrar()}" style="margin:0"/>  
+                        <p:commandButton ajax="false" value="Novo Predio" action="${predioController.criar()}" />
+                    </f:facet>  
+                </p:panelGrid>
+                <p:dataTable value="${predioController.listagem}" var="item" emptyMessage="Registros nÃo Encontrados!">
+                   <p:column sortBy="id" headerText="Id">
+                        ${item.id}
+                    </p:column>
+                    
+                    <p:column sortBy="numero" headerText="Numero">
+                        ${item.numero}
+                    </p:column>
+                    
+                    <p:column sortBy="nome" headerText="Nome">
+                        ${item.nome}
+                    </p:column>
+                    <p:column sortBy="endereco" headerText="Endereco ">
+                        ${item.endereco}
+                    </p:column>
+                    <p:column sortBy="cidade" headerText="Cidade">
+                        ${item.cidade}
+                    </p:column>
+                    
+                    <p:column sortBy="cep" headerText="Cep">
+                        ${item.cep}
+                    </p:column>
+                    
+                    <p:column sortBy="datainicio" headerText="DataInicial">
+                        ${item.datainicio}
+                    </p:column>
+                    
+                    <p:column sortBy="datafinal" headerText="DataFinal">
+                        ${item.datafinal}
+                    </p:column>
+                    
+                     <p:column headerText="Editar">
+                         <p:commandButton value="Editar" ajax="false" action="${predioController.editar()}">
+                             <f:setPropertyActionListener target="${predioController.entidade}" value="${item}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

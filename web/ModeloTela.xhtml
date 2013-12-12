@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>Sistema Construtora</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <img src="resources/img/img.png"/>
+            <div id="textop" align="center">
+                <h1>Sistema Construtora</h1>
+            </div>
+        </div>
+        <h:form>
+                                
+            <p:growl id="growl" showDetail="true" sticky="true" />   
+            <p:menubar>
+                <p:menuitem value="Login" icon="ui-icon-key"  url="login.xhtml"/>  
+                <p:submenu label="Cadastros" icon="ui-icon-pencil">                  
+                    <p:menuitem value="Funcionário" url="FuncionarioLista.xhtml"  /> 
+                    <p:menuitem value="Tipo de Funcionário" url="TipoFuncionarioLista.xhtml"  />  
+                    <p:menuitem value="Fornecedor" url="FornecedorLista.xhtml" />
+                    <p:menuitem value="Apartamento" url="ApartamentoLista.xhtml"  />  
+                    <p:menuitem value="Predio" url="PredioLista.xhtml"  />  
+                    <p:menuitem value="Condominio" url="CondominioLista.xhtml"  />  
+                    <p:menuitem value="Cliente" url="ClienteLista.xhtml"  /> 
+                    <p:menuitem value="Forma de Pagamento" url="FormaDePagamentoLista.xhtml"  /> 
+                    <p:menuitem value="Cadastrar Usuario" url="UsuarioLista.xhtml"  />  
+                </p:submenu>
+                <p:menuitem value="Contrato de Construcao" url="ContratoConstrucaoLista.xhtml"  icon="ui-icon-pencil"/> 
+                
+                <p:submenu label="Relatórios" icon="ui-icon-note">
+                    <p:menuitem ajax="false" value="Consolidação de Inventário - PDF" actionListener="#{relatorioController.PDF(actionEvent)}" />
+                    <p:menuitem ajax="false" value="Consolidação de Inventário - XLS" actionListener="#{relatorioController.XLS(actionEvent)}" />
+                </p:submenu>
+               
+               
+                
+            </p:menubar>
+
+            <div id="content" class="center_content">
+                <ui:insert name="content">Content</ui:insert>
+            </div>
+        </h:form>
+
+        <div id="bottom">
+            <center>Equipe: John Kevin /
+                            João Duque
+            </center>
+        </div>
+
+    </h:body>
+
+</html>

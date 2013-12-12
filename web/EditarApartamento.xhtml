@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+          
+    <body>
+
+        <ui:composition template="./ModeloTela.xhtml">
+            
+            <ui:define name="content">
+                <h:panelGrid columns="2">
+                <h:outputLabel value="Predio Id*:"/>
+                <p:autoComplete size="50" completeMethod="#{predioController.AutoCompletar(tmp)}" var="p" itemLabel="#{p.id}" itemValue="#{p}"  
+                                       converter="${predioConverter}" value="#{ApartamentoController.entidade.predio}" required="true" requiredMessage="O campo predio deve ser preenchido!" >
+                             <p:column>
+                                  #{p.id}
+                              </p:column>
+                               <p:column>
+                                  #{p.nome}
+                                </p:column>
+                       </p:autoComplete>                    
+                    <h:outputLabel value="Numero*:" />
+                    <p:inputText size="35" value="${ApartamentoController.entidade.numero}" required="true" />
+                    <h:outputLabel value="QUANTIDADE*:" /> 
+                    <h:outputLabel value="" /> 
+                    <h:outputLabel value="Qtd.Comodos*:" />
+                    <p:inputText size="10" value="${ApartamentoController.entidade.comodos}" required="true" />   
+                    <h:outputLabel value="Qtd.Quartos*:" />
+                    <p:inputText size="10" value="${ApartamentoController.entidade.quarto}" required="true" />
+                    <h:outputLabel value="Qtd.Banheiros*:" />
+                    <p:inputText size="10" value="${ApartamentoController.entidade.banheiro}" required="true" />
+                    <h:outputLabel value="Qtd.Salas*:" />
+                    <p:inputText size="10" value="${ApartamentoController.entidade.sala}" required="true" />
+                    <h:outputLabel value="Qtd.Cozinhas*:" />
+                    <p:inputText size="10" value="${ApartamentoController.entidade.cozinha}" required="true" />
+                    <h:outputLabel value="Qtd.Suites*:" />
+                    <p:inputText size="10" value="${ApartamentoController.entidade.suite}" required="true" />
+                    <h:outputLabel value="Qtd.Areas*:" />
+                    <p:inputText size="10" value="${ApartamentoController.entidade.area}" required="true" />
+                    <h:outputLabel value="Qtd.Garagem*:" />
+                    <p:inputText size="10" value="${ApartamentoController.entidade.garagem}" required="true" />                 
+                </h:panelGrid>
+                <br/>
+                (*) Campos de Preenchimento Obrigatório
+                <br/><br/>
+                <p:panel id="Rodape">
+                    <p:commandButton value="Salvar" onclick="msgSalvar.show()" />
+                    <p:commandButton value="Remover" rendered="#{ApartamentoController.entidade.id > 0}" onclick="msgRemover.show()"/>
+                    <p:commandButton value="Cancelar" ajax="false" immediate="true" action="${ApartamentoController.voltar()}" />
+                </p:panel>       
+                <p:confirmDialog id="confirmaSalvar" message="Deseja realmente Salvar os Dados?" header="Confirmação"
+                                 severity="alert" widgetVar="msgSalvar">
+                    <p:commandButton ajax="false" value="SIM" action="${ApartamentoController.salvar()}" />
+                    <p:commandButton ajax="false" value="NÃO" onclick="msgSalvar.hide()" />                    
+                </p:confirmDialog>
+
+                <p:confirmDialog id="confirmaRemover" message="Deseja realmente Remover os Dados?" header="Confirmação"
+                                 severity="alert" widgetVar="msgRemover">
+                    <p:commandButton ajax="false" value="SIM" action="${ApartamentoController.apagar()}" />
+                    <p:commandButton ajax="false" value="NÃO" onclick="msgRemover.hide()" />
+
+                </p:confirmDialog>  
+            </ui:define>
+                
+        </ui:composition>
+            
+    </body>
+</html>

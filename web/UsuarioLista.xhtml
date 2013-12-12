@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./ModeloTela.xhtml">
+
+            <ui:define name="content">
+                <p:panelGrid columns="2">
+                    <f:facet name="header">Filtros</f:facet>
+                    
+                    <h:outputLabel value="Id:" />
+                    <p:inputText id="id" value="${usuarioController.filtro.id}" />
+                    
+                    <h:outputLabel value="Login:" />
+                    <p:inputText value="${usuarioController.filtro.login}" />          
+                    
+                    <f:facet name="footer"> 
+                        <p:commandButton ajax="false" value="Filtrar" icon="ui-icon-check" action="${usuarioController.filtrar()}" style="margin:0"/>  
+                        <p:commandButton ajax="false" value="Novo Usuário" action="${usuarioController.criar()}" />
+                    </f:facet>
+                </p:panelGrid>
+                
+                <br />
+                
+                <p:dataTable style="text-align: center" value="${usuarioController.listagem}" var="usuario" emptyMessage="Registros não encontrados!">
+                    <p:column sortBy="Id" headerText="Id" > ${usuario.id}</p:column>
+                    <p:column sortBy="login" headerText="Login" > ${usuario.login}</p:column>
+                   <!-- <p:column sortBy="password" headerText="Password" > ${usuario.senha}</p:column> -->
+                    <p:column sortBy="funcionario" headerText="Funcionário" >${usuario.funcionario.nome}</p:column>
+    
+                    <p:column >
+                        <p:commandButton value="Editar" ajax="false" action="${usuarioController.editar()}">
+                            <f:setPropertyActionListener target="${usuarioController.entidade}" value="${usuario}" />
+                        </p:commandButton>
+                        
+                    </p:column>
+                
+                </p:dataTable>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

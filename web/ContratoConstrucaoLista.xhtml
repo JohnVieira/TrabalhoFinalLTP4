@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./ModeloTela.xhtml">
+
+            <ui:define name="content">
+                <p:panelGrid columns="2">
+                     
+                    <f:facet name="header">Filtros</f:facet>
+                    
+                    <h:outputLabel value="Id:" />
+                    <p:inputText id="id" value="${contratoConstrucaoController.filtro.id}" />
+                    
+                    <!--
+                    <h:outputLabel value="Data de Inicio:" />
+                    <p:inputText value="${contratoConstrucaoController.filtro.dataInicio}" />   
+                    
+                    <h:outputLabel value="Data de Término:" />
+                    <p:inputText value="${contratoConstrucaoController.filtro.dataTermino}" />   
+                    -->
+                    
+                    <f:facet name="footer"> 
+                        <p:commandButton ajax="false" value="Filtrar" icon="ui-icon-check" action="${contratoConstrucaoController.filtrar()}" style="margin:0"/>  
+                        <p:commandButton ajax="false" value="Novo Contrato" action="${contratoConstrucaoController.criar()}" />
+                    </f:facet>
+                </p:panelGrid>
+                
+                <br />
+                <p:dataTable style="text-align: center" value="${contratoConstrucaoController.listagem}" var="contrato" emptyMessage="Registros não encontrados!">
+                    <p:column sortBy="id" headerText="Id" > #{contrato.id}</p:column>
+                    <p:column sortBy="dataInicio" headerText="Data Inicio" > 
+                        <h:outputText value="${contrato.dataInicio}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Brazil/East" locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column sortBy="dataTermino" headerText="Data Término" >
+                        <h:outputText value="${contrato.dataTermino}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Brazil/East" locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column sortBy="dataRegistro" headerText="Data Registro" >
+                        <h:outputText value="${contrato.dataRegistro}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" timeZone="Brazil/East" locale="pt_BR"/>
+                        </h:outputText>
+                    </p:column>                    
+                    <p:column sortBy="contratante" headerText="Contratante" > #{contrato.cliente.nome}</p:column>
+                    <p:column sortBy="condomio" headerText="Código do Condominio" > #{contrato.condominio}</p:column>
+                    <p:column sortBy="valor" headerText="Valor" > #{contrato.valorTotal}</p:column>
+                    <p:column sortBy="anotacoes" headerText="Anotações" > #{contrato.anotacoes}</p:column>
+    
+                    <p:column >
+                        <p:commandButton value="Editar" ajax="false" action="${contratoConstrucaoController.editar()}">
+                            <f:setPropertyActionListener target="${contratoConstrucaoController.entidade}" value="${contrato}" />
+                        </p:commandButton>
+                        
+                    </p:column>
+                
+                </p:dataTable>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./ModeloTela.xhtml">
+
+            <ui:define name="content">
+                    <f:facet name="header">Contrato de Construcao</f:facet>
+
+                            <h:panelGrid columns="2" cellpadding="10" >
+
+                                
+                                <h:outputLabel value="Cliente Nome*:"/>
+                                <p:autoComplete size="50" completeMethod="#{ClienteController.autoCompletar}" var="p" itemLabel="#{p.nome}" itemValue="#{p}"  
+                                                converter="${clienteConverter}" value="#{contratoConstrucaoController.entidade.cliente}" required="true" requiredMessage="O campo cliente deve ser preenchido!" >
+                                    <p:column>
+                                        #{p.cpfcnpj}
+                                    </p:column>
+                                    <p:column>
+                                        #{p.nome}
+                                    </p:column>
+                                </p:autoComplete>
+                                <h:outputLabel value="Código do Condominio*:"/>
+                                <p:autoComplete size="50" completeMethod="#{CondominioController.autoCompletar}" var="p" itemLabel="#{p.id}" itemValue="#{p}"  
+                                                converter="${condominioConverter}" value="#{contratoConstrucaoController.entidade.condominio}" required="true" requiredMessage="O campo condominio deve ser preenchido!">
+                                    <p:column>
+                                        #{p.id}
+                                    </p:column>
+                                    <p:column>
+                                        #{p.endereco}
+                                    </p:column>
+                                    <p:column>
+                                        #{p.Numero}
+                                    </p:column>
+                                    <p:column>
+                                        #{p.nome}
+                                    </p:column>
+                                </p:autoComplete>
+                                
+                                
+                                <h:outputLabel value="Data Inicio*:" />
+                                <p:calendar size="50" value="#{contratoConstrucaoController.entidade.dataInicio}" required="true" requiredMessage="O campo data de inicio deve ser preenchido!" />
+                                <h:outputLabel value="Data Término*:" />
+                                <p:calendar size="50" value="#{contratoConstrucaoController.entidade.dataTermino}" required="true" requiredMessage="O campo data de termino deve ser preenchido!" />
+                                <h:outputLabel value="Valor Total da Construcao*:" />
+                                <p:inputText size="50" value="#{contratoConstrucaoController.entidade.valorTotal}" required="true" requiredMessage="O campo comissão deve ser preenchido!" />
+                                <h:outputLabel value="Forma de Pagamento*:" />
+                                <p:selectOneMenu value="#{contratoConstrucaoController.entidade.formaDePagamento}" converter="${formaDePagementoConverter}" >
+                                    <f:selectItem itemLabel="Selecione" itemValue="" />
+                                    <f:selectItems value="#{formaDePagamentoController.listarTodos()}" />
+                                </p:selectOneMenu>
+                                <h:outputLabel value="Anotações:" />
+                                <p:inputTextarea value="#{contratoConstrucaoController.entidade.anotacoes}" rows="5" cols="52" />
+                                
+                                
+                                
+                                
+                            </h:panelGrid>
+                    
+                    <p:panel id="rodape">
+                    
+                        <p:commandButton value="Salvar" onclick="msgSalvar.show()" />
+                        <p:commandButton value="Remover" rendered="#{contratoConstrucaoController.entidade.id > 0}" onclick="msgRemover.show()"/>
+                        <p:commandButton value="Voltar" action="${contratoConstrucaoController.voltar()}" />
+                        
+                    </p:panel>
+                    
+                   
+                    
+                    
+                    <p:confirmDialog id="confirmarSalvar" message="Deseja realmente salvar os dados?" header="Confirmação" 
+                                     severity="alert" widgetVar="msgSalvar" >
+                        
+                        <p:commandButton ajax="false" value="SIM" action="${contratoConstrucaoController.salvar()}" onclick="dlg.show()" />
+                        <p:commandButton ajax="false" value="NÃO" onclick="msgSalvar.hide()" />
+                    </p:confirmDialog>
+                    
+                    <p:growl id="alerta" showDetail="true"  life="10000"/>
+                    <p:dialog id="dialog" header="Salvando .."  onShow="msgSalvar.hide()" widgetVar="dlg" dynamic="true" height="20" width="200" modal="true">  
+                        <p:outputLabel value="Aguarde ......." />
+                </p:dialog>
+                    
+                 <p:confirmDialog id="confirmaRemover" message="Deseja realmente Remover os dados?" header="Confirmação"
+                                 severity="alert" widgetVar="msgRemover">
+                     <p:commandButton ajax="false" value="SIM" action="${contratoConstrucaoController.apagar()}" />
+                    <p:commandButton ajax="false" value="NÃO" onclick="msgRemover.hide()" />
+
+                </p:confirmDialog> 
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

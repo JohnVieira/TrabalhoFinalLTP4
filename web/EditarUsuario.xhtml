@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    
+  
+    <body>
+        
+        <ui:composition template="./ModeloTela.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+                    <p:tabView>
+                        <p:tab title="Cadastro de Usuário" id="cadastroUsuario">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                
+                                <h:outputLabel value="Funcionário*:" />
+                                <p:autoComplete size="50" completeMethod="#{funcionarioController.autoCompletar(tmp)}" var="p" itemLabel="#{p.nome}" itemValue="#{p}"  
+                                                converter="${funcionarioConverter}" value="#{usuarioController.entidade.funcionario}" required="true" requiredMessage="O campo funcionário deve ser preenchido!" >
+                                    <p:column>
+                                        #{p.cpf}
+                                    </p:column>
+                                    <p:column>
+                                        #{p.nome}
+                                    </p:column>
+                                </p:autoComplete>
+                                
+                                <h:outputLabel value="Nível*:" />
+                                <p:selectOneMenu id="nivel" value="#{usuarioController.entidade.nivel}" required="true" requiredMessage="O campo nível deve ser selecionado!">
+                                    <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                    <f:selectItem itemLabel="Administrador" itemValue="2"/>
+                                    <f:selectItem itemLabel="Usuario" itemValue="1"/>
+                                </p:selectOneMenu>
+                                
+                                <h:outputLabel value="Login*:"/>
+                                <p:inputText size="20" value="#{usuarioController.entidade.login}" required="true" requiredMessage="O campo login deve ser preenchido!"/>
+                                
+                                <h:outputLabel value="Senha*:"/>
+                                <p:password id="senha1" size="20" maxlength="16" value="#{usuarioController.entidade.senha}" match="senha2" required="true" feedback="true" requiredMessage="O campo senha deve ser preenchido!" />
+                                
+                                <h:outputLabel value="Confirmar senha*:"/>
+                                <p:password id="senha2" size="20" maxlength="16" value="#{usuarioController.entidade.senha}" required="true" requiredMessage="O campo confirmar senha deve ser preenchido!" />
+                                
+                                <h:inputHidden value="#{usuarioController.entidade.ativo}"/>
+                            </h:panelGrid>
+                        </p:tab>
+                     
+                    </p:tabView>
+                    
+                    <p:panel id="rodape">
+                        <p:commandButton value="Salvar" onclick="msgSalvar.show()"/>
+                        <p:commandButton value="Remover" rendered="#{usuarioController.entidade.id > 0}" onclick="msgRemover.show()"/>
+                        <p:commandButton value="Voltar" action="#{usuarioController.voltar()}"/>
+                        
+                    </p:panel>
+                    
+                    <p:confirmDialog id="confirmarSalvar" message="Deseja realmente salvar os dados?" header="Confirmação" 
+                                     severity="alert" widgetVar="msgSalvar" >
+                        
+                        <p:commandButton ajax="false" value="SIM" action="${usuarioController.salvar()}" />
+                        <p:commandButton ajax="false" value="NÃO" onclick="msgSalvar.hide()" />
+                    </p:confirmDialog>
+                    
+                    <p:growl id="alerta" showDetail="true" sticky="true" life="3"/>
+                    
+                </h:form>
+                
+                 <p:confirmDialog id="confirmaRemover" message="Deseja realmente Remover os dados?" header="Confirmação"
+                                 severity="alert" widgetVar="msgRemover">
+                     <p:commandButton ajax="false" value="SIM" action="${usuarioController.apagar()}" />
+                    <p:commandButton ajax="false" value="NÃO" onclick="msgRemover.hide()" />
+
+                </p:confirmDialog> 
+               
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

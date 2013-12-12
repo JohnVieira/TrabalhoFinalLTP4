@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+          
+    <body>
+        
+        <ui:composition template="./ModeloTela.xhtml">
+
+            <ui:define name="content">
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Descrição*:" />
+                    <p:inputText  value="${tipoFuncionarioController.entidade.descricao}" required="true" label="Descrição" />                 
+                </h:panelGrid>
+                <br/>
+                (*) Campos de Preenchimento Obrigatórios
+                <br/><br/>
+                <p:panel>
+                    <p:commandButton value="Salvar" onclick="msgSalvar.show()" />
+                    <p:commandButton value="Remover" rendered="#{tipoFuncionarioController.entidade.id > 0}" onclick="msgRemover.show()"/>
+                    <p:commandButton value="Cancelar" ajax="false" immediate="true" action="${tipoFuncionarioController.voltar()}"/>
+                </p:panel>
+                <p:confirmDialog id="confirmaSalvar" message="Deseja realmente Salvar os Dados?" header="Confirmação"
+                                 severity="alert" widgetVar="msgSalvar">
+                    <p:commandButton ajax="false" value="SIM" action="${tipoFuncionarioController.salvar()}" />
+                    <p:commandButton ajax="false" value="NÃO" onclick="msgSalvar.hide()" />                    
+                </p:confirmDialog>
+                    
+                <p:confirmDialog id="confirmaRemover" message="Deseja realmente Remover os Dados?" header="Confirmação"
+                                 severity="alert" widgetVar="msgRemover">
+                    <p:commandButton ajax="false" value="SIM" action="${tipoFuncionarioController.apagar()}" />
+                    <p:commandButton ajax="false" value="NÃO" onclick="msgRemover.hide()" />
+                        
+                </p:confirmDialog>     
+
+
+            </ui:define>
+                
+        </ui:composition>
+            
+    </body>
+</html>
+    
